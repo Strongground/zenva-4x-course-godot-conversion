@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dkynmpwtuwe20"]
+
+[node name="BasicResourcesOverlay" type="Node2D"]
+
+[node name="Label" type="RichTextLabel" parent="."]
+z_index = 4
+clip_contents = false
+offset_right = 159.0
+offset_bottom = 63.0
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false

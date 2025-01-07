@@ -1,0 +1,78 @@
+[gd_scene load_steps=13 format=3 uid="uid://cqxhc7qwarjcr"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_41sc8"]
+[ext_resource type="TileSet" uid="uid://dwjdofybjk3j5" path="res://terrain_tileset.tres" id="1_cuwx2"]
+[ext_resource type="Script" path="res://HexTileMap.gd" id="1_s8x3b"]
+[ext_resource type="Texture2D" uid="uid://c4h4540mkmvt" path="res://textures/hex_overlays.png" id="3_lfg5s"]
+[ext_resource type="Script" path="res://Camera.gd" id="3_ljkri"]
+[ext_resource type="Script" path="res://UI_Manager.gd" id="6_bbrob"]
+[ext_resource type="PackedScene" uid="uid://6w2idgs5cqkk" path="res://ui/TerrainTileDetails.tscn" id="6_mbxdc"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8d82j"]
+noise_type = 3
+frequency = 0.0025
+domain_warp_type = 2
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dovh3"]
+texture = ExtResource("3_lfg5s")
+texture_region_size = Vector2i(128, 128)
+0:1/0 = 0
+0:1/0/modulate = Color(0.422783, 0.385283, 0.999997, 1)
+0:0/0 = 0
+0:0/0/modulate = Color(0.422783, 0.385283, 0.999997, 1)
+
+[sub_resource type="TileSet" id="TileSet_xxi6o"]
+tile_shape = 3
+tile_size = Vector2i(128, 128)
+sources/2 = SubResource("TileSetAtlasSource_dovh3")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pcbih"]
+texture = ExtResource("3_lfg5s")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(0.13662, 0.372034, 1, 1)
+
+[sub_resource type="TileSet" id="TileSet_h8ssr"]
+tile_shape = 3
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetAtlasSource_pcbih")
+
+[node name="Game" type="Node"]
+script = ExtResource("1_41sc8")
+test_noise = SubResource("FastNoiseLite_8d82j")
+
+[node name="HexTileMap" type="Node2D" parent="."]
+script = ExtResource("1_s8x3b")
+width = 256
+height = 128
+seed = 333333
+
+[node name="BaseLayer" type="TileMapLayer" parent="HexTileMap"]
+tile_set = ExtResource("1_cuwx2")
+
+[node name="TerritoryLayer" type="TileMapLayer" parent="HexTileMap"]
+modulate = Color(0.422783, 0.385283, 0.999997, 1)
+tile_set = SubResource("TileSet_xxi6o")
+
+[node name="SelectionOverlayLayer" type="TileMapLayer" parent="HexTileMap"]
+z_index = 2
+tile_set = SubResource("TileSet_h8ssr")
+
+[node name="TileProductionOverlay" type="Node2D" parent="HexTileMap"]
+visible = false
+
+[node name="Camera" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("3_ljkri")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="UIManager" type="Node2D" parent="CanvasLayer"]
+unique_name_in_owner = true
+script = ExtResource("6_bbrob")
+
+[node name="TerrainTileDetails" parent="CanvasLayer" instance=ExtResource("6_mbxdc")]
+visible = false

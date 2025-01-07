@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://chyejq86c2yp2"]
+
+[ext_resource type="Script" path="res://City.gd" id="1_1d14c"]
+[ext_resource type="Texture2D" uid="uid://bjm7ejowuto1c" path="res://textures/city1_icon.png" id="2_2fpng"]
+
+[node name="City" type="Node2D"]
+script = ExtResource("1_1d14c")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_2fpng")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -65.0
+offset_top = 56.0
+offset_right = 73.0
+offset_bottom = 87.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 22
+text = "City Name"
+horizontal_alignment = 1
